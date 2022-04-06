@@ -1,56 +1,8 @@
 @extends('layouts.master')
-
-@section('css')
+@section('page_name')
+    Enter profile data
 @endsection
-
-@section('title')
-@endsection
-
-@section('content_title')
-    Form Registration
-@endsection
-
-@section('page1')
-@endsection
-
-@section('page2')
-@endsection
-
-@section('username')
-    {{ $user->name }}
-@endsection
-
-@section('userpic')
-<img src="{{ asset('uploads/auth/'.auth()->user()->img) }}" class="img-circle elevation-2" alt="User Image">
-@endsection
-
-@section('dashboard')
-    <ul class="nav nav-treeview">
-        <li class="nav-item">
-            <a href="" class="nav-link ">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Enter Your cart Data</p>
-            </a>
-        </li>
-        
-        @if (!empty($userdata) )
-        <li class="nav-item">
-            <a href="{{ url('userProfile/show') }}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Show your Data</p>
-            </a>
-        </li>
-        @endif
-
-    </ul>
-@endsection
-
-@if (Session::has('success'))
-    <div class="alert alert-success text-center">{{ Session::get('success') }}</div>
-@endif
-
 @section('content')
-
     <form action="{{ url('userProfile/store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="card-body">
@@ -108,13 +60,8 @@
             @enderror
         </div>
         <!-- /.card-body -->
-
         <div class="card-footer">
             <button type="submit" name="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
-@endsection
-
-
-@section('scripts')
 @endsection

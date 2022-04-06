@@ -1,52 +1,7 @@
 @extends('layouts.master')
-
-@section('css')
+@section('page_name')
+    Edit profile data
 @endsection
-
-@section('title')
-@endsection
-
-@section('content_title')
-    Update profile
-@endsection
-
-@section('page1')
-@endsection
-
-@section('page2')
-@endsection
-
-@section('username')
-    {{ $user->name }}
-@endsection
-
-@section('userpic')
-    <img src="{{ asset('uploads/auth/' . auth()->user()->img) }}" class="img-circle elevation-2" alt="User Image">
-@endsection
-
-@section('dashboard')
-    <ul class="nav nav-treeview">
-        <li class="nav-item">
-            <a href="{{ url('userProfile/create') }}" class="nav-link ">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Enter Your cart Data</p>
-            </a>
-        </li>
-        {{-- @if ($profile->isNotEmpty()) @endif --}}
-        <li class="nav-item">
-            <a href="{{ url('userProfile/show/' . $user->id) }}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Show your Data</p>
-            </a>
-        </li>
-
-    </ul>
-@endsection
-
-@if (Session::has('success'))
-    <div class="alert alert-success text-center">{{ Session::get('success') }}</div>
-@endif
-
 @section('content')
     <form action="{{ route('update', $userprofile->id) }}" method="post" enctype="multipart/form-data">
         @csrf
@@ -109,8 +64,4 @@
             <button type="submit" name="submit" class="btn btn-primary">Update</button>
         </div>
     </form>
-@endsection
-
-
-@section('scripts')
 @endsection

@@ -18,13 +18,16 @@ use function PHPUnit\Framework\isNull;
 
 class profileController extends Controller
 {
+    public function index()
+    {
+        return view('profile.index');
+    }
     public function create()
     {
         $user = auth()->user();
         $userdata = ModelsUserProfile::where("user_id",$user->id)->get();
         return view("profile.create", ["user" => $user, "userdata" => $userdata]);
     }
-
 
     public function store(userProfile $request)
     {
@@ -105,18 +108,3 @@ class profileController extends Controller
         return redirect('userProfile/create')->with('success', 'profile is deleted successfully');
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

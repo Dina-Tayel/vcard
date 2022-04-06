@@ -47,6 +47,7 @@ Route::group(['middleware'=>'auth'],function(){
 Route::group(['prefix'=>'userProfile','middleware'=>'auth'],function(){
 
     // user profile
+    Route::get('/index',[ProfileProfileController::class,"index"]);
     Route::get('/create',[ProfileProfileController::class,"create"]);
     Route::post('/store',[ProfileProfileController::class,"store"]);
     Route::get('/show',[ProfileProfileController::class,"show"]);

@@ -27,7 +27,7 @@ class LoginController extends Controller
         $remember=$request->has('remember') ? true : false; 
 
         if(Auth::attempt($credentials,$remember)){
-            return redirect("userProfile/show");
+            return redirect("userProfile/index");
         }
       
         return redirect('login')->with('msg','credentials are not correct');

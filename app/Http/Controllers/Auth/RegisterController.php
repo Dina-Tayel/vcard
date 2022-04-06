@@ -40,7 +40,7 @@ class RegisterController extends Controller
         $user->img=$imageUploadName;
         $user->save();
         Auth::login($user,true);
-        return redirect("userProfile/show");
+        return redirect("userProfile/index");
     }
 
 }
