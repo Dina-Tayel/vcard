@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Monolog\Handler\IFTTTHandler;
 
 class UserController extends Controller
 {
@@ -56,8 +57,38 @@ class UserController extends Controller
     return redirect('userProfile/show')->with('success',"data updated successfully");
     }
 
-    public function destroy()
+    public function destroy($id)
     {
+        $user=User::findOrFail($id);
+        $user_image=$user->img;
+        $user_image=public_path('uploads/auth/'.$user->img);
+        if(File::exists($user_image)){
+            File::delete($user_image);
+        }
+
+        foreach ($user->profile as $profile_image )
+        {
+            // echo($profile_image->profile_pic);
+            if($profile_image->profile_pic !='avatar.png'){
+                $path=public_path('uploads/users/'.$profile_image->profile_pic);
+                if(File::exists($path)){
+                    File::delete($path);
+                }
+            }
+        }
+
+        if($user)
+        {
+            $user->delete();
+        }
+        return redirect('login');
+
+
+        // $profile_pics= $user->profile->each(function($q) {
+        //     // echo    $q->profile_pic;
+        //     $path=public_path('uploads/users/'.$q->profile_pic);
+        // });
+        // dd($path);
 
     }
 }

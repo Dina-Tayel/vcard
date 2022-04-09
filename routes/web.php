@@ -40,12 +40,16 @@ Route::group(['middleware'=>'auth'],function(){
      //edit user data 
     Route::get('/edit',[UserController::class,"edit"]);
     Route::put('/update',[UserController::class,"update"]);
-    });
+
+    //delete user
+    Route::delete('delete/{id}',[UserController::class,'destroy'])->name('user.delete');
+
+
+});
 
 
 //-------------profile-------------------------------
 Route::group(['prefix'=>'userProfile','middleware'=>'auth'],function(){
-
     // user profile
     Route::get('/index',[ProfileProfileController::class,"index"]);
     Route::get('/create',[ProfileProfileController::class,"create"]);
@@ -54,5 +58,4 @@ Route::group(['prefix'=>'userProfile','middleware'=>'auth'],function(){
     Route::get('edit/{id}',[ProfileProfileController::class,"edit"])->name('edit');
     Route::put('update/{id}',[ProfileProfileController::class,"update"])->name("update");
     Route::delete('/delete/{id}',[ProfileProfileController::class,"destroy"])->name('delete');
-
 });

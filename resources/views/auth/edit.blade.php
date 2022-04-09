@@ -92,8 +92,13 @@
 
         <div class="card-footer">
             <button type="submit" name="submit" class="btn btn-primary">Update</button>
-            <a class="btn btn-danger">Delete</a>
         </div>
+    </form>
+
+    <form method="POST" action="{{ route('user.delete',auth()->user()->id) }}">
+        @csrf
+        @method('DELETE')
+        <button type="submit" onclick="return confirm('Are Youe sure you want to delete your account')" class="btn btn-danger">Delete</button>
     </form>
 
 @endsection

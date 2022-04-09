@@ -21,8 +21,9 @@ return new class extends Migration
             $table->string("fb");
             $table->string("linkedin");
             $table->string("github");
-            $table->bigInteger("user_id");
             $table->tinyInteger("role")->default(0);
+            $table->unsignedBigInteger("user_id");
+            $table->foreign('user_id')->references("id")->on("users")->onDelete("cascade")->onUpdate("cascade");    
             $table->timestamps();
             
         });

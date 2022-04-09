@@ -49,7 +49,7 @@ class profileController extends Controller
         }
 
         $profile->save();
-        return redirect('userProfile/create')->with('success', 'You are successfully add your vcart data');
+        return redirect('userProfile/show')->with('success', 'You are successfully add your vcart data');
     }
 
     public function show()
@@ -90,7 +90,7 @@ class profileController extends Controller
             $userprofile->profile_pic = $imageUploadName;
         }
         $userprofile->update();
-        return redirect('userProfile/create')->with('success', 'profile is updated successfully');
+        return redirect('userProfile/index')->with('success', 'profile is updated successfully');
     }
 
 
