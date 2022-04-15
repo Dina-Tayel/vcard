@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\loginUsers;
+use App\Http\Requests\Auth\LoginRequset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -15,7 +15,7 @@ class LoginController extends Controller
         return view("auth.login");
     }
 
-    public function loginRequest(loginUsers $request)
+    public function loginRequest(LoginRequset $request)
     {
 
         $credentials= 

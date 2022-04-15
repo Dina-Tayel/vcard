@@ -18,8 +18,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
-})->middleware('guest');
+    return view('index');
+});
 // -------- authentication 
 Route::group(['middleware'=>'guest'],function(){
     //login

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUsers extends FormRequest
+class ProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,12 @@ class StoreUsers extends FormRequest
     public function rules()
     {
         return [
-            "name"=>"required|max:200",
-            "email"=>"required|max:200|email|unique:users,email,.$this->id",
-            "password"=>"required|string|min:6|same:confirm_password",
-            "confirm_password"=>"required",
+            "phone"=>"required|numeric|digits:11",
+            "email"=>"required|max:200|email",
+            "profile_pic"=>"image|mimes:png,jpg,jpeg",
+            "fb"=>"required|url",
+            "linkedin"=>"required|url" ,
+            "github"=>"required|url",
         ];
     }
 }

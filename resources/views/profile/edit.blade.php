@@ -50,16 +50,15 @@
                 <label for="exampleInputFile">File input</label>
 
                 {{-- <input type="file"  name="profile_pic" class="custom-file-input" id="exampleInputFile"> --}}
-                <input type="file" name="img" id="">
+                <input type="file" name="profile_pic" id="">
 
             </div>
             <img src="{{ asset('uploads/users/' . $userprofile->profile_pic) }} " height="50px">
-            @error('img')
+            @error('profile_pic')
                 <p class="text-danger"> {{ $message }}</p>
             @enderror
         </div>
         <!-- /.card-body -->
-
         <div class="card-footer">
             <button type="submit" name="submit" class="btn btn-primary">Update</button>
         </div>

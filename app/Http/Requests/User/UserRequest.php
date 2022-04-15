@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class userProfile extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,16 +22,13 @@ class userProfile extends FormRequest
      *
      * @return array
      */
-    
     public function rules()
     {
         return [
-            "phone"=>"required|numeric|digits:11",
-            "email"=>"required|max:200|email",
-            "profile_pic"=>"image|mimes:png,jpg,jpeg",
-            "fb"=>"required",
-            "linkedin"=>"required" ,
-            "github"=>"required",
+            'name'=>'required|min:3|max:100',
+            'email'=>'required|max:100|unique:users,email,'. Auth::id(),
+            'img'=>'image|mimes:png,jpg,gif,jpeg',
+            
         ];
     }
 }

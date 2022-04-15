@@ -1,49 +1,14 @@
 @extends('layouts.master')
 
-@section('css')
-@endsection
 
 @section('title')
+Update Account
 @endsection
 
-@section('content_title')
-    Update User
-@endsection
-
-@section('page1')
-@endsection
-
-@section('page2')
-@endsection
-
-@section('username')
-    {{ auth()->user()->name }}
-@endsection
-
-@section('userpic')
-<img src="{{ asset('uploads/auth/'.auth()->user()->img) }}" class="img-circle elevation-2" alt="User Image">
-@endsection
-
-@section('dashboard')
-    <ul class="nav nav-treeview">
-        <li class="nav-item">
-            <a href="{{ url('userProfile/create') }}" class="nav-link ">
-                <i  class="far fa-circle nav-icon"></i>
-                <p>Enter Your cart Data</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ url('userProfile/show') }}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Show your Data</p>
-            </a>
-        </li>
-    </ul>
-@endsection
-
+{{-- 
 @if (Session::has('success'))
     <div class="alert alert-success text-center">{{ Session::get('success') }}</div>
-@endif
+@endif --}}
 
 @section('content')
     <form action="{{ url('update') }}" method="post" enctype="multipart/form-data">
@@ -83,22 +48,22 @@
                     </div>
                 </div>
             </div>
-            <img src="{{ asset('uploads/auth/'.auth()->user()->img) }}" class="img-circle elevation-2" width="50px" alt="User Image">
+            <img src="{{ asset('storage/auth/'.auth()->user()->img) }}" class="img-circle elevation-2" width="50px" alt="User Image">
             @error('img')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <!-- /.card-body -->
 
-        <div class="card-footer">
-            <button type="submit" name="submit" class="btn btn-primary">Update</button>
+        <div class=" d-flex justify-content-between col-md-12">
+            <button type="submit" name="submit" class="btn btn-primary" >Update Account</button>
         </div>
     </form>
 
-    <form method="POST" action="{{ route('user.delete',auth()->user()->id) }}">
+    <form method="POST" action="{{ route('user.delete',auth()->user()->id) }}" class="dodo">
         @csrf
         @method('DELETE')
-        <button type="submit" onclick="return confirm('Are Youe sure you want to delete your account')" class="btn btn-danger">Delete</button>
+        <button type="submit" onclick="return confirm('Are Youe sure you want to delete your account')" class="btn btn-danger">Delete Account</button>
     </form>
 
 @endsection

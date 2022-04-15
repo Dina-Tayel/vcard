@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('assets/back/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('assets/back/dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/back/dist/css/style.css') }}">
     @yield('css')
 </head>
 
@@ -59,7 +60,7 @@
                 <!-- Sidebar user (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{ asset('uploads/auth/' . auth()->user()->img) }}" class="img-circle elevation-2"
+                        <img src="{{ asset('storage/auth/' . auth()->user()->img) }}" class="img-circle elevation-2"
                             alt="User Image">
                     </div>
                     <div class="info">
