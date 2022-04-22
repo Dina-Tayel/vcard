@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Profile;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Pofile\ProfileRequest;
 use App\Http\Traits\UploadImageTrait;
+use App\Models\User;
 use App\Models\UserProfile as ModelsUserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 use function PHPUnit\Framework\isNull;
 
@@ -19,7 +19,6 @@ class profileController extends Controller
 
     public function index()
     {
-
         return view('profile.index');
         
     }
@@ -32,8 +31,10 @@ class profileController extends Controller
     }
 
     public function store(ProfileRequest $request)
+
+
     {
-        $imageUploadName=$this->imageUpload($request,$request->file("profile_pic"),"public/users","avatar.png");
+        $imageUploadName=$this->imageUpload($request,$request->file("profile_pic"),"public/profiles","avatar.png");
         ModelsUserProfile::create($request->safe()->except(['profile_pic']) + ["profile_pic"=>$imageUploadName,"user_id"=>auth()->user()->id ]);
         return redirect('userProfile/show')->with('success', 'You are successfully add your vcart data');
     }
@@ -70,9 +71,9 @@ class profileController extends Controller
         if(!empty($request->profile_pic))
         {
             if($userprofile->profile_pic !="avatar.png") {
-                $this->deleteImage("public/users/$userprofile->profile_pic");
+                $this->deleteImage("public/profiles/$userprofile->profile_pic",$userprofile->profile_pic);
             }
-            $imageUploadName= $this->imageUpload($request,$request->profile_pic,"public/users");
+            $imageUploadName= $this->imageUpload($request,$request->profile_pic,"public/profiles");
             $userprofile->profile_pic = $imageUploadName;
         }
 
@@ -84,9 +85,9 @@ class profileController extends Controller
     {
         $userprofile = ModelsUserProfile::findOrFail($id);
         if($userprofile->profile_pic !="avatar.png") {
-            $this->deleteImage("public/users/$userprofile->profile_pic");
+            $this->deleteImage("public/profiles/$userprofile->profile_pic",$userprofile->profile_pic);
         }
         $userprofile->delete();
-        return redirect('userProfile/create')->with('success', 'profile is deleted successfully');
+        return redirect('userProfile/index')->with('success', 'profile is deleted successfully');
     }
 }

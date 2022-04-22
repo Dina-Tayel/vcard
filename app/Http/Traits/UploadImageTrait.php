@@ -23,7 +23,7 @@ trait UploadImageTrait
     }
 
     // delete image
-    protected function deleteImage($path,$oldImage,$defaultName)
+    protected function deleteImage($path,$oldImage,$defaultName=null)
     {
         if($oldImage != $defaultName){
             if(Storage::exists($path)){

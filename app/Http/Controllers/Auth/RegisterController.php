@@ -20,11 +20,13 @@ class RegisterController extends Controller
     }
 
     public function registerRequest(RegisterRequest $request)
+
     {
         $user=new User();
         $user->name=$request->name;
         $user->email=$request->email;
         $user->password=bcrypt($request->password);
+        $user->address=$request->address;
         $user->remember_token=Str::random("10");
         $imageUploadName=$this->imageUpload($request,$request->img,"public/auth/");
         $user->img=$imageUploadName;

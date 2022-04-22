@@ -73,6 +73,19 @@
                             </div>
                         </div>
                     </div>
+                    <div class="input-group mb-3">
+                        <input type="text" name="address"
+                            class="form-control @error('address') is-invalid @enderror " placeholder="address">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    @error('address')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
+                   
                     <div class="form-group">
                         <div class="input-group">
                             <div class="custom-file">

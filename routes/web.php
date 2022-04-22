@@ -44,9 +44,8 @@ Route::group(['middleware'=>'auth'],function(){
     //delete user
     Route::delete('delete/{id}',[UserController::class,'destroy'])->name('user.delete');
 
-    // show all users in website ---------  admin part-----------------
+    // ---------------  admin part-----------------
     Route::group(['middleware'=>'Allusers'],function(){
-
         Route::get('admin/showusers',[AdminController::class,'showUsers'])->name('Allusers');
         Route::get('admin/showprofiles',[AdminController::class,'showProfiles'])->name('Allprofiles');
 

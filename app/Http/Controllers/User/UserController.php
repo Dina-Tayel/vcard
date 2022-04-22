@@ -16,8 +16,7 @@ class UserController extends Controller
 
     public function profile($profilename)
     {
- 
-        $profile=ModelsUserProfile::where("profile_name",$profilename)->first();
+        $profile=ModelsUserProfile::with("user")->where("profile_name",$profilename)->first();
         if($profile){
             return view("index",compact("profile"));
         }
@@ -40,7 +39,7 @@ class UserController extends Controller
     }
 
     if(collect($request->img)->isNotEmpty()){
-        $this->deleteImage("public/auth/$user->img");
+        $this->deleteImage("public/auth/$user->img",$user->img);
         $imageUploadName=$this->imageUpload($request,$request->img,"public/auth/");
         $user->img=$imageUploadName;
     }
@@ -57,12 +56,12 @@ class UserController extends Controller
         
         foreach ($user->profile as $profile_image )
         {
-            $this->deleteImage("public/users/$profile_image->profile_pic");
+            $this->deleteImage("public/users/$profile_image->profile_pic",$user->img);
 
          }
                 
         $user->delete();
-        $this->deleteImage("public/auth/$user->img");
+        $this->deleteImage("public/auth/$user->img",$user->img);
         return redirect('login');
 
     }
