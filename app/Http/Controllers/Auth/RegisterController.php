@@ -27,7 +27,6 @@ class RegisterController extends Controller
         $user->password=bcrypt($request->password);
         $user->remember_token=Str::random("10");
         $imageUploadName=$this->imageUpload($request,$request->img,"public/auth/");
-        
         $user->img=$imageUploadName;
         $user->save();
         Auth::login($user,true);

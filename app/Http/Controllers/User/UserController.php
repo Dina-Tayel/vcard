@@ -2,19 +2,27 @@
 
 namespace App\Http\Controllers\User;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserRequest;
 use App\Http\Traits\UploadImageTrait;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
-use Monolog\Handler\IFTTTHandler;
+use App\Models\UserProfile as ModelsUserProfile;
 
 class UserController extends Controller
 {
     use UploadImageTrait;
+
+    public function profile($profilename)
+    {
+ 
+        $profile=ModelsUserProfile::where("profile_name",$profilename)->first();
+        if($profile){
+            return view("index",compact("profile"));
+        }
+       return abort("404");
+    }
 
     public function edit()
     {
@@ -40,7 +48,7 @@ class UserController extends Controller
     $user->email=$request->email;
     $user->name=$request->name;
     $user->save();
-    return redirect('userProfile/show')->with('success',"data updated successfully");
+    return redirect('userProfile/index')->with('success',"data updated successfully");
     }
 
     public function destroy($id)
@@ -58,4 +66,6 @@ class UserController extends Controller
         return redirect('login');
 
     }
+
+  
 }

@@ -1,13 +1,21 @@
 @extends('layouts.master')
-@section('page_name')
+@section('title')
     Edit profile data
 @endsection
 @section('content')
-    <form action="{{ route('update', $userprofile->id) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ url('userProfile/update/' . $userprofile->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="card-body row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
+                <label for="exampleInputEmail1">profile name</label>
+                <input type="text" name="profile_name" class="form-control @error('profile_name') is-invalid @enderror"
+                    value="{{ $userprofile->profile_name }}" name="profile_name" placeholder="profile name">
+            </div>
+            @error('profile_name')
+                <p class="text-danger"> {{ $message }}</p>
+            @enderror
+            <div class="form-group col-md-12">
                 <label for="exampleInputEmail1">phone</label>
                 <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror"
                     value="{{ $userprofile->phone }}" name="phone" placeholder="phone">
@@ -15,14 +23,14 @@
             @error('phone')
                 <p class="text-danger"> {{ $message }}</p>
             @enderror
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
                 <label for="exampleInputPassword1">FB</label>
                 <input type="text" name="fb" value="{{ $userprofile->fb }}" class="form-control" placeholder="FB">
             </div>
             @error('fb')
                 <p class="text-danger"> {{ $message }}</p>
             @enderror
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
                 <label for="exampleInputPassword1">Linkedin</label>
                 <input type="text" name="linkedin" value="{{ $userprofile->linkedin }}" class="form-control"
                     placeholder="Linkedin">
@@ -30,7 +38,7 @@
             @error('linkedin')
                 <p class="text-danger"> {{ $message }}</p>
             @enderror
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
                 <label for="exampleInputPassword1">Email</label>
                 <input type="text" name="email" value="{{ $userprofile->email }}" class="form-control"
                     placeholder="email">
@@ -38,7 +46,7 @@
             @error('email')
                 <p class="text-danger"> {{ $message }}</p>
             @enderror
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
                 <label for="exampleInputPassword1">Github</label>
                 <input type="text" name="github" value="{{ $userprofile->github }}" class="form-control"
                     placeholder="Github">
@@ -53,7 +61,7 @@
                 <input type="file" name="profile_pic" id="">
 
             </div>
-            <img src="{{ asset('uploads/users/' . $userprofile->profile_pic) }} " height="50px">
+            <img src="{{ asset('storage/profiles/' . $userprofile->profile_pic) }} " height="50px">
             @error('profile_pic')
                 <p class="text-danger"> {{ $message }}</p>
             @enderror
@@ -63,5 +71,4 @@
             <button type="submit" name="submit" class="btn btn-primary">Update</button>
         </div>
     </form>
-
 @endsection

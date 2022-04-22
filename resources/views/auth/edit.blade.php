@@ -2,11 +2,10 @@
 
 
 @section('title')
-Update Account
+    Update Account
 @endsection
 
-{{-- 
-@if (Session::has('success'))
+{{-- @if (Session::has('success'))
     <div class="alert alert-success text-center">{{ Session::get('success') }}</div>
 @endif --}}
 
@@ -48,7 +47,8 @@ Update Account
                     </div>
                 </div>
             </div>
-            <img src="{{ asset('storage/auth/'.auth()->user()->img) }}" class="img-circle elevation-2" width="50px" alt="User Image">
+            <img src="{{ asset('storage/auth/' . auth()->user()->img) }}" class="img-circle elevation-2" width="50px"
+                alt="User Image">
             @error('img')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -56,16 +56,16 @@ Update Account
         <!-- /.card-body -->
 
         <div class=" d-flex justify-content-between col-md-12">
-            <button type="submit" name="submit" class="btn btn-primary" >Update Account</button>
+            <button type="submit" name="submit" class="btn btn-primary">Update Account</button>
         </div>
     </form>
 
-    <form method="POST" action="{{ route('user.delete',auth()->user()->id) }}" class="dodo">
+    <form method="POST" action="{{ route('user.delete', auth()->user()->id) }}" class="dodo">
         @csrf
         @method('DELETE')
-        <button type="submit" onclick="return confirm('Are Youe sure you want to delete your account')" class="btn btn-danger">Delete Account</button>
+        <button type="submit" onclick="return confirm('Are Youe sure you want to delete your account')"
+            class="btn btn-danger">Delete Account</button>
     </form>
-
 @endsection
 
 

@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
+            $table->string("profile_name")->unique();
             $table->string("profile_pic")->nullable()->default("avatar.png");
             $table->string("email");
             $table->string("phone");
             $table->string("fb");
             $table->string("linkedin");
             $table->string("github");
-            $table->tinyInteger("role")->default(0);
             $table->unsignedBigInteger("user_id");
             $table->foreign('user_id')->references("id")->on("users")->onDelete("cascade")->onUpdate("cascade");    
             $table->timestamps();

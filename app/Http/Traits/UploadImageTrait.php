@@ -23,11 +23,23 @@ trait UploadImageTrait
     }
 
     // delete image
-    protected function deleteImage($path)
+    protected function deleteImage($path,$oldImage,$defaultName)
     {
-        if(Storage::exists($path)){
-            Storage::delete($path);
+        if($oldImage != $defaultName){
+            if(Storage::exists($path)){
+                Storage::delete($path);
+            }
         }
     }
+
+    // $oldImage => the image in database
+    // $default image => if the image is nullable 
+    // path => path of the old image
+    // if($userprofile->profile_pic !="avatar.png") {
+    //    if(Storage::exists($path)){
+    //             Storage::delete($path);
+    //       }
+    //     // }
+
 
 }

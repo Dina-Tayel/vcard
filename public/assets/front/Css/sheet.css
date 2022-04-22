@@ -1,0 +1,226 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,700;1,300&display=swap');
+:root {
+  --bck: #424142;
+  --title: #00E88F;
+  --subt: #00A8E0;
+  --subt2: #D7D7DB;
+  
+  --font: rgb(241, 241, 241);
+  --glitch1: hsl(214, 50%, 52%);
+  --glitch2: hsl(9, 50%, 52%);
+  --glitch3: hsl(61, 50%, 52%);
+}
+* {
+  
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+#container {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr 12fr 2fr;
+  background-color: var(--bck);
+}
+
+#title {
+  color: var(--title);
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  font-weight: 700;
+  font-size: 12rem;
+  transition: .5s;
+  cursor: pointer;
+}
+
+#title:hover {
+  text-shadow: 3px 3px #00BD74, 6px 6px #009C60, 9px 9px #00804F;
+}
+
+#subtitle {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  font-weight: 300;
+  font-size: 2rem;
+  color: var(--subt);
+  cursor: normal;
+  
+  
+}
+#subtitle a{
+  cursor: pointer;
+  color: var(--subt2);
+  font-style: italic;
+  text-decoration: none;
+  transition: .5s;
+}
+#subtitle a:hover{
+  font-style: normal;
+  text-decoration: none;
+  text-shadow: 4px 4px #00BD74;
+}
+#canvas, #astronaut, #astroPath {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+
+}
+
+
+@media only screen and (max-width: 725px) {
+  #container {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: 1fr 8fr 2fr;
+  
+}
+  #title {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  font-weight: 700;
+  font-size: 5rem;
+  transition: .5s;
+  cursor: pointer;
+}
+  #subtitle {
+    visibility: hidden;
+  }
+  #subtitle a {
+    visibility: visible;
+    padding: 1.3rem;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+  }
+}
+
+#title::after {
+  content: "";
+  position: absolute;
+  height: 0.3rem;
+  width: 100%;
+  background: var(--bck);
+  bottom: 0;
+  left: 0;
+  transform: translateY(10px);
+  animation: line 0.4s infinite;
+  box-shadow: 0px 0px 2px 2px var(--bck);
+}
+#title::before {
+  content: "";
+  position: absolute;
+  height: 0.3rem;
+  width: 100%;
+  background: var(--bck);
+  bottom: 0;
+  left: 0;
+  animation: lineTwo 0.9s infinite;
+  box-shadow: 0px 0px 4px 3px var(--bck);
+}
+#title {
+  position: relative;
+  transform: translateX(5px, 3px);
+  animation: move 0.8s infinite;
+}
+/*
+@keyframes glitch {
+  0% {
+    text-shadow: 6px 4px var(--glitch2), 5px -5px var(--glitch1),
+      2px -4px var(--glitch3);
+  }
+  1% {
+    text-shadow: -2px 0px var(--glitch2), -5px 5px var(--glitch1),
+      2px 4px var(--glitch3);
+  }
+  19% {
+    text-shadow: -2px 0px var(--glitch2), -5px 5px var(--glitch1),
+      2px 4px var(--glitch3);
+  }
+  20% {
+    text-shadow: -4px 4px var(--glitch2), 3px 3px var(--glitch1),
+      -2px 4px var(--glitch3);
+  }
+  39% {
+    text-shadow: -4px 4px var(--glitch2), 3px 3px var(--glitch1),
+      -2px 4px var(--glitch3);
+  }
+  40% {
+    text-shadow: 1px -1px var(--glitch2), -1px 5px var(--glitch1),
+      6px -3px var(--glitch3);
+  }
+  59% {
+    text-shadow: 1px -1px var(--glitch2), -1px 5px var(--glitch1),
+      6px -3px var(--glitch3);
+  }
+  60% {
+    text-shadow: -5px -4px var(--glitch2), -4px 4px var(--glitch1),
+      -3px 3px var(--glitch3);
+  }
+  79% {
+    text-shadow: -5px -4px var(--glitch2), -4px 4px var(--glitch1),
+      -3px 3px var(--glitch3);
+  }
+  80% {
+    text-shadow: -4px 4px var(--glitch2), 3px 3px var(--glitch1),
+      -2px 4px var(--glitch3);
+  }
+  99% {
+    text-shadow: -4px 4px var(--glitch2), 3px 3px var(--glitch1),
+      -2px 4px var(--glitch3);
+  }
+}*/
+
+@keyframes line {
+  0% {
+    transform: translateY(10px);
+  }
+  50% {
+    transform: translateY(-210px);
+  }
+}
+
+@keyframes lineTwo {
+  0% {
+    transform: translateY(10px);
+  }
+  48% {
+    transform: translateY(-210px);
+  }
+  50% {
+    transform: translateY(50px);
+  }
+  100% {
+    transform: translateY(-210px);
+  }
+}
+
+@keyframes move {
+  0% {
+    transform: translate(5px, 3px);
+  }
+  25% {
+    transform: translate(-4px, 1px);
+  }
+  50% {
+    transform: translate(3px, -4px);
+  }
+  75% {
+    transform: translate(-3px, 4px);
+  }
+  99% {
+    transform: translate(5px, 3px);
+  }
+}

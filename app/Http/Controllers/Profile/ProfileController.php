@@ -3,18 +3,13 @@
 namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Profile\ProfileRequest;
-use App\Http\Requests\StoreUsers;
-use App\Http\Requests\userProfile;
+use App\Http\Requests\Pofile\ProfileRequest;
 use App\Http\Traits\UploadImageTrait;
-use App\Models\User;
 use App\Models\UserProfile as ModelsUserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Request as FacadesRequest;
-use Symfony\Component\HttpKernel\Profiler\Profile;
+
+
 
 use function PHPUnit\Framework\isNull;
 
@@ -61,6 +56,10 @@ class profileController extends Controller
 
     public function update(ProfileRequest $request, $id)
     {
+        //  $profiles= Auth::user()->profile;
+        //  foreach($profiles as $profile){
+        //      return $profile->user_id;
+        //  }
         $userprofile = ModelsUserProfile::findOrFail($id);
         $userprofile->phone = $request->phone;
         $userprofile->fb = $request->fb;
@@ -73,11 +72,11 @@ class profileController extends Controller
             if($userprofile->profile_pic !="avatar.png") {
                 $this->deleteImage("public/users/$userprofile->profile_pic");
             }
-            $imageUploadName= $this->imageUpload($request,$request->file("profile_pic"),"public/users");
+            $imageUploadName= $this->imageUpload($request,$request->profile_pic,"public/users");
             $userprofile->profile_pic = $imageUploadName;
         }
 
-        $userprofile->update();
+        $userprofile->save();
         return redirect('userProfile/index')->with('success', 'profile is updated successfully');
     }
 

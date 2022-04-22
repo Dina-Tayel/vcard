@@ -28,7 +28,14 @@ class UserRequest extends FormRequest
             'name'=>'required|min:3|max:100',
             'email'=>'required|max:100|unique:users,email,'. Auth::id(),
             'img'=>'image|mimes:png,jpg,gif,jpeg',
-            
         ];
+    }
+
+    public function messages()
+    {
+        return [
+            'email.required'  => 'The :attribute field is required.',
+            'email.unique'    => ':attribute is already used'
+          ];
     }
 }

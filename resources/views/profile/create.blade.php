@@ -1,11 +1,22 @@
 @extends('layouts.master')
-@section('page_name')
+
+@section('title')
     Enter profile data
 @endsection
+
 @section('content')
     <form action="{{ url('userProfile/store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="card-body row">
+            <div class="form-group col-md-12">
+                <label for="exampleInputEmail1">profile name</label>
+                <input type="text" name="profile_name" class="form-control" value="{{ old('profile_name') }}"
+                    placeholder="profile name">
+            </div>
+
+            @error('profile_name')
+                <p class="text-danger"> {{ $message }}</p>
+            @enderror
             <div class="form-group col-md-12">
                 <label for="exampleInputEmail1">phone</label>
                 <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" name="phone"
