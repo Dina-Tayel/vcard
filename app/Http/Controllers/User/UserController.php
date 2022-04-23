@@ -14,19 +14,26 @@ class UserController extends Controller
 {
     use UploadImageTrait;
 
-    public function profile($profilename)
+    public function profile($username,$profilename=null)
     {
-        $profile=ModelsUserProfile::with("user")->where("profile_name",$profilename)->first();
-        if($profile){
-            return view("index",compact("profile"));
-        }
-       return abort("404");
+            $user=User::where("username",$username)->with('profile')->first();
+            if($user){
+                if(!$profilename){
+                    $profile=$user->profile->first();                   
+                }else{
+                    $profile=$user->profile->where("profile_name",$profilename)->first();
+                }
+                if($profile){
+                    return view("index",compact("profile","user"));
+                }
+            }
+            return abort(404);
     }
 
     public function edit()
     {
         $user=User::findOrFail(auth()->user()->id);
-        return view("auth.edit",compact("user"));
+        return view("user.edit",compact("user"));
     }
     
     public function update(UserRequest $request)
@@ -37,15 +44,14 @@ class UserController extends Controller
     {
       $user->password=Hash::make($request->pssword);
     }
-
     if(collect($request->img)->isNotEmpty()){
         $this->deleteImage("public/auth/$user->img",$user->img);
         $imageUploadName=$this->imageUpload($request,$request->img,"public/auth/");
         $user->img=$imageUploadName;
     }
-
-    $user->email=$request->email;
     $user->name=$request->name;
+    $user->username=$request->username;
+    $user->email=$request->email;
     $user->save();
     return redirect('userProfile/index')->with('success',"data updated successfully");
     }
@@ -57,9 +63,7 @@ class UserController extends Controller
         foreach ($user->profile as $profile_image )
         {
             $this->deleteImage("public/users/$profile_image->profile_pic",$user->img);
-
          }
-                
         $user->delete();
         $this->deleteImage("public/auth/$user->img",$user->img);
         return redirect('login');

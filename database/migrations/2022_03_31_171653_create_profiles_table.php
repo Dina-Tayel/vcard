@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->string("profile_name")->unique();
+            $table->string("profile_name");
             $table->string("profile_pic")->nullable()->default("avatar.png");
             $table->string("email");
             $table->string("phone");

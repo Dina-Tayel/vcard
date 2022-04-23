@@ -5,13 +5,8 @@ namespace App\Http\Controllers\Profile;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Pofile\ProfileRequest;
 use App\Http\Traits\UploadImageTrait;
-use App\Models\User;
 use App\Models\UserProfile as ModelsUserProfile;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpKernel\Profiler\Profile;
-
-use function PHPUnit\Framework\isNull;
 
 class profileController extends Controller
 {
@@ -26,13 +21,10 @@ class profileController extends Controller
     public function create()
     {
         $user = auth()->user();
-       
         return view("profile.create", ["user" => $user]);
     }
 
     public function store(ProfileRequest $request)
-
-
     {
         $imageUploadName=$this->imageUpload($request,$request->file("profile_pic"),"public/profiles","avatar.png");
         ModelsUserProfile::create($request->safe()->except(['profile_pic']) + ["profile_pic"=>$imageUploadName,"user_id"=>auth()->user()->id ]);
@@ -41,8 +33,7 @@ class profileController extends Controller
 
     public function show()
     {
-        // $userprofile = ModelsUserProfile::where('user_id', auth()->id())->get();
-        // $userprofile = ModelsUserProfile::findOrFail(auth()->user()->id);
+
         $userprofile =Auth::user()->profile; // refactor using relationship
         $user = auth()->user();
         return view("profile.show", compact("userprofile", "user"));
@@ -57,28 +48,18 @@ class profileController extends Controller
 
     public function update(ProfileRequest $request, $id)
     {
-        //  $profiles= Auth::user()->profile;
-        //  foreach($profiles as $profile){
-        //      return $profile->user_id;
-        //  }
+
         $userprofile = ModelsUserProfile::findOrFail($id);
-        $userprofile->phone = $request->phone;
-        $userprofile->fb = $request->fb;
-        $userprofile->linkedin = $request->linkedin;
-        $userprofile->email = $request->email;
-        $userprofile->github = $request->github;
-        // dd($request->profile_pic);
         if(!empty($request->profile_pic))
         {
+            $imageUploadName= $this->imageUpload($request,$request->profile_pic,"public/profiles");
             if($userprofile->profile_pic !="avatar.png") {
                 $this->deleteImage("public/profiles/$userprofile->profile_pic",$userprofile->profile_pic);
             }
-            $imageUploadName= $this->imageUpload($request,$request->profile_pic,"public/profiles");
-            $userprofile->profile_pic = $imageUploadName;
+            $userprofile->update($request->except(['profile_pic']) + ["profile_pic"=>$imageUploadName] );
         }
-
-        $userprofile->save();
-        return redirect('userProfile/index')->with('success', 'profile is updated successfully');
+        $userprofile->update($request->except(['profile_pic']));
+        return redirect('userProfile')->with('success', 'profile is updated successfully');
     }
 
     public function destroy($id)
@@ -88,6 +69,6 @@ class profileController extends Controller
             $this->deleteImage("public/profiles/$userprofile->profile_pic",$userprofile->profile_pic);
         }
         $userprofile->delete();
-        return redirect('userProfile/index')->with('success', 'profile is deleted successfully');
+        return redirect('userProfile')->with('success', 'profile is deleted successfully');
     }
 }

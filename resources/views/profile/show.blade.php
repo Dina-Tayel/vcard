@@ -38,9 +38,9 @@
                             <td><a href="{{ $data->github }}"><i class="fab fa-github fa-2x" style="color: black"></i></a>
                             </td>
                             <td>
-                                <form method="POST" action="{{ route('delete', $data->id) }}">
+                                <form method="POST" action="{{ route('userProfile.destroy', $data->id) }}">
                                     @csrf
-                                    <a href="{{ route('edit', $data->id) }}"
+                                    <a href="{{ route('userProfile.edit', $data->id) }}"
                                         onclick=" return confirm('Are You Really Want to update');"
                                         class="btn btn-success m-1">Update</a>
 

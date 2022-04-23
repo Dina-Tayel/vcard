@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Traits\UploadImageTrait;
@@ -14,25 +12,19 @@ class RegisterController extends Controller
 {
     use UploadImageTrait;
 
-    public function register()
+    public function create()
     {
         return view("auth.register");
     }
 
-    public function registerRequest(RegisterRequest $request)
+    public function store(RegisterRequest $request)
 
     {
-        $user=new User();
-        $user->name=$request->name;
-        $user->email=$request->email;
-        $user->password=bcrypt($request->password);
-        $user->address=$request->address;
-        $user->remember_token=Str::random("10");
         $imageUploadName=$this->imageUpload($request,$request->img,"public/auth/");
-        $user->img=$imageUploadName;
-        $user->save();
+        $user=User::create(array_merge($request->validated(),
+        ['password'=>bcrypt($request->password),"img"=>$imageUploadName]));
         Auth::login($user,true);
-        return redirect("userProfile/index");
+        return redirect("userProfile");
     }
 
 }

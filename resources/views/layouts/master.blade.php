@@ -29,7 +29,7 @@
                 </li>
 
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ url('userProfile/index') }}" class="nav-link">Home</a>
+                    <a href="{{ route('userProfile.index') }}" class="nav-link">Home</a>
                 </li>
             </ul>
 

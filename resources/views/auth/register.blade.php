@@ -41,6 +41,18 @@
                         <p class="text-danger">{{ $message }}</p>
                     @enderror
                     <div class="input-group mb-3">
+                        <input type="text" name="username" value="{{ old('username') }}"
+                            class="form-control @error('username') is-invalid @enderror" placeholder="Username">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    @error('username')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
+                    <div class="input-group mb-3">
                         <input type="email" name="email" value="{{ old('email') }}"
                             class="form-control @error('email') is-invalid @enderror " placeholder="Email">
                         <div class="input-group-append">
@@ -109,7 +121,7 @@
                     </div>
                 </form>
 
-                <a href="{{ url('login') }}" class="text-center">I already have a membership</a>
+                <a href="{{ route('login') }}" class="text-center">I already have a membership</a>
             </div>
             <!-- /.form-box -->
         </div><!-- /.card -->

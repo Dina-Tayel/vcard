@@ -3,7 +3,7 @@
     Edit profile data
 @endsection
 @section('content')
-    <form action="{{ url('userProfile/update/' . $userprofile->id) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('userProfile.update', $userprofile->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="card-body row">

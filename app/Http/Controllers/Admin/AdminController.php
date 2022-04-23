@@ -10,7 +10,7 @@ use App\Models\User;
 class AdminController extends Controller
 {
     // if user role >0 
-    //1- showing all users registered in my website
+    //1- showing all users are registered in my website
     public function showUsers()
     {
         $users=User::withCount('profile')->where("role",0)->get();

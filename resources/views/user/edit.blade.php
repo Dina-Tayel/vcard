@@ -1,6 +1,4 @@
 @extends('layouts.master')
-
-
 @section('title')
     Update Account
 @endsection
@@ -20,6 +18,14 @@
                     value="{{ $user->name }}" name="name" placeholder="name">
             </div>
             @error('name')
+                <p class="text-danger"> {{ $message }}</p>
+            @enderror
+            <div class="form-group">
+                <label for="exampleInputEmail1">username</label>
+                <input type="text" name="username" class="form-control @error('username') is-invalid @enderror"
+                    value="{{ $user->username }}" name="username" placeholder="username">
+            </div>
+            @error('username')
                 <p class="text-danger"> {{ $message }}</p>
             @enderror
             <div class="form-group">
