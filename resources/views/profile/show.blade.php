@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('page_name')
+@section('title')
     show profile data
 @endsection
 @section('content')
@@ -12,6 +12,7 @@
             <table class="table table-hover text-nowrap text-center">
                 <thead>
                     <tr>
+                        <th>Profile name</th>
                         <th>Profile pic</th>
                         <th>Phone</th>
                         <th>Email</th>
@@ -24,9 +25,11 @@
                 <tbody>
                     @foreach ($userprofile as $data)
                         <tr>
-                            <td><img src="{{ asset('uploads/users/' . $data->profile_pic) }}" width="60px"></td>
-                            <td>{{ $data->phone }}</td>
-                            <td><a href="{{ $data->email }}"><i class="far fa-envelope fa-2x" style="color: black"></i></a>
+                            <td>{{ $data->profile_name }}</td>
+                            <td><img src="{{ asset('storage/profiles/' . $data->profile_pic) }}" width="60px"></td>
+                            <td><a href="tel:{{ $data->phone }}">{{ $data->phone }}</a></td>
+                            <td><a href="mailto:{{ $data->email }}"><i class="far fa-envelope fa-2x"
+                                        style="color: black"></i></a>
                             </td>
                             <td><a href="{{ $data->fb }}"><i class="fab fa-facebook fa-2x" style="color: black"></i></a>
                             </td>
@@ -35,9 +38,9 @@
                             <td><a href="{{ $data->github }}"><i class="fab fa-github fa-2x" style="color: black"></i></a>
                             </td>
                             <td>
-                                <form method="POST" action="{{ route('delete', $data->id) }}">
+                                <form method="POST" action="{{ route('userProfile.destroy', $data->id) }}">
                                     @csrf
-                                    <a href="{{ route('edit', $data->id) }}"
+                                    <a href="{{ route('userProfile.edit', $data->id) }}"
                                         onclick=" return confirm('Are You Really Want to update');"
                                         class="btn btn-success m-1">Update</a>
 

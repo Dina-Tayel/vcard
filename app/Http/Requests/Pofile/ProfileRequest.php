@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Pofile;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class userProfile extends FormRequest
+class ProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,16 +21,16 @@ class userProfile extends FormRequest
      *
      * @return array
      */
-    
     public function rules()
     {
         return [
+            "profile_name"=>"required",
             "phone"=>"required|numeric|digits:11",
             "email"=>"required|max:200|email",
             "profile_pic"=>"image|mimes:png,jpg,jpeg",
-            "fb"=>"required",
-            "linkedin"=>"required" ,
-            "github"=>"required",
+            "fb"=>"required|url",
+            "linkedin"=>"required|url",
+            "github"=>"required|url",
         ];
     }
 }

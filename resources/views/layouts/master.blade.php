@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('assets/back/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('assets/back/dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/back/dist/css/style.css') }}">
     @yield('css')
 </head>
 
@@ -27,7 +29,7 @@
                 </li>
 
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ url('userProfile/create') }}" class="nav-link">Home</a>
+                    <a href="{{ route('userProfile.index') }}" class="nav-link">Home</a>
                 </li>
             </ul>
 
@@ -59,7 +61,7 @@
                 <!-- Sidebar user (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{ asset('uploads/auth/' . auth()->user()->img) }}" class="img-circle elevation-2"
+                        <img src="{{ asset('storage/auth/' . auth()->user()->img) }}" class="img-circle elevation-2"
                             alt="User Image">
                     </div>
                     <div class="info">
@@ -77,23 +79,40 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                     Your Vcart Profile
+                                    Your Vcart Profile
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ url('userProfile/create') }}" class="nav-link ">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Enter Your cart Data</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('userProfile/show') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Show your Data</p>
-                                    </a>
-                                </li>
+                                @if (auth()->user()->role < 1)
+                                    <li class="nav-item">
+                                        <a href="{{ url('userProfile/create') }}" class="nav-link ">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Enter Your cart Data</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('userProfile/show') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Show your Data</p>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                @if (auth()->user()->role > 0)
+                                    <li class="nav-item">
+                                        <a href="{{ route('Allusers') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Show All users</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('Allprofiles') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Show All profiles</p>
+                                        </a>
+                                    </li>
+                                @endif
                             </ul>
 
                         </li>
