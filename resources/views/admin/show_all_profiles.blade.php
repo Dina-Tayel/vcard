@@ -17,19 +17,22 @@
                         <th>profile image</th>
                         <th>profile Email</th>
                         <th>profile phone</th>
-                        <th>user </th>
+                        <th>username </th>
 
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($profiles as $profile)
-                        <tr>
-                            <td>{{ $profile->profile_name }}</td>
-                            <td><img src="{{ asset('storage/profiles/' . $profile->profile_pic) }}" width="50px"></td>
-                            <td><a href="mailto:{{ $profile->email }}">{{ $profile->email }}</a></td>
-                            <td>{{ $profile->phone }}</td>
-                            <td>{{ $profile->user->name }}</td>
-                        </tr>
+                    @if ($profile->user->role<1)
+                    <tr>
+                        <td>{{ $profile->profile_name }}</td>
+                        <td><img src="{{ asset('uploads/profiles/' . $profile->profile_pic) }}" width="50px"></td>
+                        <td><a href="mailto:{{ $profile->email }}">{{ $profile->email }}</a></td>
+                        <td>{{ $profile->phone }}</td>
+                        <td>{{ $profile->user->username }}</td>
+                    </tr> 
+                    @endif
+                       
                     @endforeach
                 </tbody>
 

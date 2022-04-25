@@ -26,7 +26,7 @@
                     @foreach ($userprofile as $data)
                         <tr>
                             <td>{{ $data->profile_name }}</td>
-                            <td><img src="{{ asset('storage/profiles/' . $data->profile_pic) }}" width="60px"></td>
+                            <td><img src="{{ asset('uploads/profiles/' . $data->profile_pic) }}" width="60px"></td>
                             <td><a href="tel:{{ $data->phone }}">{{ $data->phone }}</a></td>
                             <td><a href="mailto:{{ $data->email }}"><i class="far fa-envelope fa-2x"
                                         style="color: black"></i></a>

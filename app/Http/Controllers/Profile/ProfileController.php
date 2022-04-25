@@ -15,7 +15,6 @@ class profileController extends Controller
     public function index()
     {
         return view('profile.index');
-        
     }
 
     public function create()
@@ -26,7 +25,7 @@ class profileController extends Controller
 
     public function store(ProfileRequest $request)
     {
-        $imageUploadName=$this->imageUpload($request,$request->file("profile_pic"),"public/profiles","avatar.png");
+        $imageUploadName=$this->imageUpload($request,$request->file("profile_pic"),"uploads/profiles","avatar.png");
         ModelsUserProfile::create($request->safe()->except(['profile_pic']) + ["profile_pic"=>$imageUploadName,"user_id"=>auth()->user()->id ]);
         return redirect('userProfile/show')->with('success', 'You are successfully add your vcart data');
     }
@@ -52,9 +51,9 @@ class profileController extends Controller
         $userprofile = ModelsUserProfile::findOrFail($id);
         if(!empty($request->profile_pic))
         {
-            $imageUploadName= $this->imageUpload($request,$request->profile_pic,"public/profiles");
+            $imageUploadName= $this->imageUpload($request,$request->profile_pic,"uploads/profiles");
             if($userprofile->profile_pic !="avatar.png") {
-                $this->deleteImage("public/profiles/$userprofile->profile_pic",$userprofile->profile_pic);
+                $this->deleteImage("uploads/profiles/$userprofile->profile_pic",$userprofile->profile_pic);
             }
             $userprofile->update($request->except(['profile_pic']) + ["profile_pic"=>$imageUploadName] );
         }
@@ -66,7 +65,7 @@ class profileController extends Controller
     {
         $userprofile = ModelsUserProfile::findOrFail($id);
         if($userprofile->profile_pic !="avatar.png") {
-            $this->deleteImage("public/profiles/$userprofile->profile_pic",$userprofile->profile_pic);
+            $this->deleteImage("uploads/profiles/$userprofile->profile_pic",$userprofile->profile_pic);
         }
         $userprofile->delete();
         return redirect('userProfile')->with('success', 'profile is deleted successfully');

@@ -20,7 +20,7 @@ class RegisterController extends Controller
     public function store(RegisterRequest $request)
 
     {
-        $imageUploadName=$this->imageUpload($request,$request->img,"public/auth/");
+        $imageUploadName=$this->imageUpload($request,$request->img,"uploads/auth/");
         $user=User::create(array_merge($request->validated(),
         ['password'=>bcrypt($request->password),"img"=>$imageUploadName]));
         Auth::login($user,true);

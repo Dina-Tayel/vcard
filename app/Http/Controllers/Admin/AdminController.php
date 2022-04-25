@@ -20,9 +20,9 @@ class AdminController extends Controller
     //2- showing all accounts in my website
     public function showProfiles()
     {
-        $profiles=ModelsUserProfile::with("user:id,name")->get();
+        $profiles=ModelsUserProfile::with(["user:id,username,role"])->get();
         // foreach ($profiles as $profile)
-        // return $profile->user->name;
+        // return $profile->user->role;
         return view("admin.show_all_profiles",compact("profiles"));
     }
 

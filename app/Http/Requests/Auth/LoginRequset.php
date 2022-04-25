@@ -24,7 +24,7 @@ class LoginRequset extends FormRequest
     public function rules()
     {
         return [
-            "email"=>"required|max:200|email",
+            "email"=>"required|max:50|email",
             "password"=>"required|string|min:6",
         ];
     }
