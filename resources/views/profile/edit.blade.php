@@ -61,7 +61,7 @@
                 <input type="file" name="profile_pic" id="">
 
             </div>
-            <img src="{{ asset('storage/profiles/' . $userprofile->profile_pic) }} " height="50px">
+            <img src="{{ asset('uploads/profiles/' . $userprofile->profile_pic) }} " height="50px">
             @error('profile_pic')
                 <p class="text-danger"> {{ $message }}</p>
             @enderror

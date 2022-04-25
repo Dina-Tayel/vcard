@@ -1,45 +1,50 @@
 <?php 
 namespace App\Http\Traits;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 trait UploadImageTrait
 {
     // upload image
-    protected function imageUpload($request,$image,$path,$default_img=null)
+    protected function imageUpload($request,$name,$folder,$default_img=null)
     {
-        if($request->hasFile($request->image)){
-            $imageExtension = $image->getClientOriginalExtension();
-            $imageUploadName = uniqid() . '.' . $imageExtension;
-            $image->storeAs($path,$imageUploadName); // upload image im storage
+         if($request->hasFile($request->image)){
+            $imageExtension = $name->getClientOriginalExtension();
+            $imageUploadName = uniqid() . '.' . $imageExtension;  
+            $path=public_path($folder);
+            $name->move($path,$imageUploadName);
+            // $image->storeAs($folder,$imageUploadName); // upload image im storage
             return $imageUploadName;
         }else
-        {
-            return $default_img;
-        }
-        
-        // $path = public_path('uploads/users');  // upload image in public path
-        // $image->move($path, $imageUploadName);
+            {
+                return $default_img;
+            }
     }
 
     // delete image
     protected function deleteImage($path,$oldImage,$defaultName=null)
     {
         if($oldImage != $defaultName){
-            if(Storage::exists($path)){
-                Storage::delete($path);
+            if(File::exists($path))
+            {
+                File::delete($path);
             }
+            // if(Storage::exists($path)){ //delete image from storage
+            //     Storage::delete($path);
+            // }
         }
     }
 
+    //$name      =>    $request->image
     // $oldImage => the image in database
     // $default image => if the image is nullable 
     // path => path of the old image
     // if($userprofile->profile_pic !="avatar.png") {
     //    if(Storage::exists($path)){
     //             Storage::delete($path);
-    //       }
-    //     // }
+    //  }
+    // }
 
 
 }

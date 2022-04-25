@@ -45,8 +45,8 @@ class UserController extends Controller
       $user->password=Hash::make($request->pssword);
     }
     if(collect($request->img)->isNotEmpty()){
-        $this->deleteImage("public/auth/$user->img",$user->img);
-        $imageUploadName=$this->imageUpload($request,$request->img,"public/auth/");
+        $this->deleteImage("uploads/auth/$user->img",$user->img);
+        $imageUploadName=$this->imageUpload($request,$request->img,"uploads/auth/");
         $user->img=$imageUploadName;
     }
     $user->name=$request->name;
@@ -62,12 +62,12 @@ class UserController extends Controller
         
         foreach ($user->profile as $profile_image )
         {
-            $this->deleteImage("public/users/$profile_image->profile_pic",$user->img);
+            $this->deleteImage("uploads/users/$profile_image->profile_pic",$user->img);
          }
         $user->delete();
-        $this->deleteImage("public/auth/$user->img",$user->img);
+        $this->deleteImage("uploads/auth/$user->img",$user->img);
+        Auth::logout($user);
         return redirect('login');
-
     }
 
   

@@ -53,7 +53,7 @@
                     </div>
                 </div>
             </div>
-            <img src="{{ asset('storage/auth/' . auth()->user()->img) }}" class="img-circle elevation-2" width="50px"
+            <img src="{{ asset('uploads/auth/' . auth()->user()->img) }}" class="img-circle elevation-2" width="50px"
                 alt="User Image">
             @error('img')
                 <p class="text-danger">{{ $message }}</p>

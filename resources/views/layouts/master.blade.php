@@ -27,12 +27,10 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
                             class="fas fa-bars"></i></a>
                 </li>
-
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="{{ route('userProfile.index') }}" class="nav-link">Home</a>
                 </li>
             </ul>
-
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
@@ -61,7 +59,7 @@
                 <!-- Sidebar user (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{ asset('storage/auth/' . auth()->user()->img) }}" class="img-circle elevation-2"
+                        <img src="{{ asset('uploads/auth/' . auth()->user()->img) }}" class="img-circle elevation-2"
                             alt="User Image">
                     </div>
                     <div class="info">
@@ -84,21 +82,22 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
+                                {{-- user --}}
                                 @if (auth()->user()->role < 1)
                                     <li class="nav-item">
                                         <a href="{{ url('userProfile/create') }}" class="nav-link ">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Enter Your cart Data</p>
+                                            <p>Enter Your VCart Data</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="{{ url('userProfile/show') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Show your Data</p>
+                                            <p>Show your profiles</p>
                                         </a>
                                     </li>
                                 @endif
-
+                                {{-- admin --}}
                                 @if (auth()->user()->role > 0)
                                     <li class="nav-item">
                                         <a href="{{ route('Allusers') }}" class="nav-link">
