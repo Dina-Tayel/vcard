@@ -3,7 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Profile\profileController as ProfileProfileController;
+use App\Http\Controllers\Profile\profileController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Route;
 |
 */;
 
-Route::get('/profile/{username}/{profilename?}',[UserController::class,"profile"]);
+Route::get('/profile/{user:username}/{profilename?}',[UserController::class,"profile"]); //model Bending
+
+// Route::get('/profile/{username}/{id}/{profilename?}',[UserController::class,"profile"]);
 // -------- authentication -----------------------------------
 Route::group(['middleware'=>'guest'],function(){
 //login   
@@ -35,14 +37,15 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('/logout',[LoginController::class,"logout"]);
     //edit account 
     Route::get('/edit',[UserController::class,"edit"]);
-    Route::put('/update',[UserController::class,"update"]);
+    Route::put('/update/{user}',[UserController::class,"update"]);
     //delete account
     Route::delete('delete/{id}',[UserController::class,'destroy'])->name('user.delete');
 
     // ---------------  admin part--------------------------
-    Route::group(['middleware'=>'Allusers'],function(){
-        Route::get('admin/showusers',[AdminController::class,'showUsers'])->name('Allusers');
-        Route::get('admin/showprofiles',[AdminController::class,'showProfiles'])->name('Allprofiles');
+    Route::group(['middleware'=>'Allusers','prefix'=>'admin'],function(){
+        Route::get('/showAllusers',[AdminController::class,'showAllUsers'])->name('Allusers');
+        Route::get('/showAllprofiles',[AdminController::class,'showAllProfiles'])->name('Allprofiles');
+        Route::get('/showuserprofiles/{id}',[AdminController::class,'showUserProfiles'])->name('userProfiles');
 
     });
    
@@ -50,14 +53,14 @@ Route::group(['middleware'=>'auth'],function(){
 
 //------------- user profiles -------------------------------
 
-Route::resource('/userProfile', ProfileProfileController::class);
-// Route::group(['prefix'=>'userProfile','middleware'=>'auth'],function(){
-//     // user profile
-//     Route::get('/',[ProfileProfileController::class,"index"])->name("userProfile.index");
-//     Route::get('/create',[ProfileProfileController::class,"create"])->name("userProfile.create");
-//     Route::post('/store',[ProfileProfileController::class,"store"])->name("userProfile.store");
-//     Route::get('/show',[ProfileProfileController::class,"show"])->name("userProfile.show");
-//     Route::get('edit/{id}',[ProfileProfileController::class,"edit"])->name("userProfile.edit");
-//     Route::put('/update/{id}',[ProfileProfileController::class,"update"])->name("userProfile.update");
-//     Route::delete('/delete/{id}',[ProfileProfileController::class,"destroy"])->name("userProfile.destroy");
-// });
+// Route::resource('/userProfile', profileController::class);
+Route::group(['prefix'=>'userProfile','middleware'=>'auth'],function(){
+    // user profile
+    Route::get('/',[profileController::class,"index"])->name("userProfile.index");
+    Route::get('/create',[profileController::class,"create"])->name("userProfile.create");
+    Route::post('/store',[profileController::class,"store"])->name("userProfile.store");
+    Route::get('/show',[profileController::class,"show"])->name("userProfile.show");
+    Route::post('edit/{profile}',[profileController::class,"edit"])->name("userProfile.edit");
+    Route::put('/update/{profile}',[profileController::class,"update"])->name("userProfile.update");
+    Route::delete('/delete/{profile}',[profileController::class,"destroy"])->name("userProfile.destroy");
+});

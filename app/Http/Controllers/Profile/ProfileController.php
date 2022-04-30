@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Profile;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Pofile\ProfileRequest;
 use App\Http\Traits\UploadImageTrait;
-use App\Models\UserProfile as ModelsUserProfile;
+use App\Models\Profile;
 use Illuminate\Support\Facades\Auth;
 
 class profileController extends Controller
@@ -19,55 +19,51 @@ class profileController extends Controller
 
     public function create()
     {
-        $user = auth()->user();
-        return view("profile.create", ["user" => $user]);
+        return view("profile.create");
     }
 
     public function store(ProfileRequest $request)
     {
         $imageUploadName=$this->imageUpload($request,$request->file("profile_pic"),"uploads/profiles","avatar.png");
-        ModelsUserProfile::create($request->safe()->except(['profile_pic']) + ["profile_pic"=>$imageUploadName,"user_id"=>auth()->user()->id ]);
+        // ModelsUserProfile::create($request->safe()->except(['profile_pic']) + ["profile_pic"=>$imageUploadName,"user_id"=>auth()->user()->id ]);
+        Profile::create(["profile_pic"=>$imageUploadName,"user_id"=>auth()->user()->id ] + $request->validated() );
         return redirect('userProfile/show')->with('success', 'You are successfully add your vcart data');
     }
 
     public function show()
     {
-
         $userprofile =Auth::user()->profile; // refactor using relationship
         $user = auth()->user();
         return view("profile.show", compact("userprofile", "user"));
     }
 
-    public function edit($id)
+    public function edit(Profile $profile )
     {
-        $user = auth()->user();
-        $userprofile = ModelsUserProfile::findOrFail($id);
-        return view("profile.edit", ['user' => $user, 'userprofile' => $userprofile]);
+        return view("profile.edit",compact("profile"));
     }
 
-    public function update(ProfileRequest $request, $id)
+    public function update(ProfileRequest $request,Profile $profile )
     {
-
-        $userprofile = ModelsUserProfile::findOrFail($id);
         if(!empty($request->profile_pic))
         {
             $imageUploadName= $this->imageUpload($request,$request->profile_pic,"uploads/profiles");
-            if($userprofile->profile_pic !="avatar.png") {
-                $this->deleteImage("uploads/profiles/$userprofile->profile_pic",$userprofile->profile_pic);
+            if($profile->profile_pic !="avatar.png") {
+                $this->deleteImage("uploads/profiles/$profile->profile_pic",$profile->profile_pic);
             }
-            $userprofile->update($request->except(['profile_pic']) + ["profile_pic"=>$imageUploadName] );
+            $profile->update(["profile_pic"=>$imageUploadName] + $request->validated() );
+            return redirect('userProfile')->with('success', 'profile is updated successfully');
         }
-        $userprofile->update($request->except(['profile_pic']));
+        $profile->update($request->validated());
         return redirect('userProfile')->with('success', 'profile is updated successfully');
     }
 
-    public function destroy($id)
+    public function destroy(Profile $profile)
     {
-        $userprofile = ModelsUserProfile::findOrFail($id);
-        if($userprofile->profile_pic !="avatar.png") {
-            $this->deleteImage("uploads/profiles/$userprofile->profile_pic",$userprofile->profile_pic);
+        if($profile->profile_pic !="avatar.png")
+        {
+            $this->deleteImage("uploads/profiles/$profile->profile_pic",$profile->profile_pic);
         }
-        $userprofile->delete();
+        $profile->delete();
         return redirect('userProfile')->with('success', 'profile is deleted successfully');
     }
 }

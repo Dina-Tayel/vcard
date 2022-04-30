@@ -19,7 +19,7 @@
                         <th>facebook</th>
                         <th>Linkedin</th>
                         <th>github</th>
-                        <th class="colgroup">Action</th>
+                        <th colspan="3">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,12 +38,18 @@
                             <td><a href="{{ $data->github }}"><i class="fab fa-github fa-2x" style="color: black"></i></a>
                             </td>
                             <td>
+                                <form method="POST" action="{{ route('userProfile.edit', $data->id) }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary"> Update</button>
+                                </form>
+                            </td>
+                            <td>
+                                <a href="{{ url('profile/' . auth()->user()->username . '/' . $data->profile_name) }}"
+                                    class="btn btn-success ">Show</a>
+                            </td>
+                            <td>
                                 <form method="POST" action="{{ route('userProfile.destroy', $data->id) }}">
                                     @csrf
-                                    <a href="{{ route('userProfile.edit', $data->id) }}"
-                                        onclick=" return confirm('Are You Really Want to update');"
-                                        class="btn btn-success m-1">Update</a>
-
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger"
                                         onclick=" return confirm('Are You Really Want to delete');"> Delete</button>
@@ -52,7 +58,6 @@
                         </tr>
                     @endforeach
                 </tbody>
-
             </table>
         </div>
         <!-- /.card-body -->

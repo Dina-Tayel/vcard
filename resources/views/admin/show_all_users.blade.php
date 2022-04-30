@@ -25,7 +25,7 @@
                             <td>{{ $user->name }}</td>
                             <td><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
                             <td><img src="{{ asset('uploads/auth/' . $user->img) }}" width="50px"></td>
-                            <td>{{ $user->profile_count }}</td>
+                            <td><a href="{{ route('userProfiles',$user->id) }}">{{ $user->profile_count }}</a></td>
                         </tr>
                     @endforeach
                 </tbody>

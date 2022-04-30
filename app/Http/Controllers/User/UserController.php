@@ -8,15 +8,14 @@ use App\Http\Traits\UploadImageTrait;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\UserProfile as ModelsUserProfile;
 
 class UserController extends Controller
 {
     use UploadImageTrait;
 
-    public function profile($username,$profilename=null)
+    public function profile(User $user , $profilename=null) 
     {
-            $user=User::where("username",$username)->with('profile')->first();
+            // $user=User::where("username",$username)->with('profile')->first();
             if($user){
                 if(!$profilename){
                     $profile=$user->profile->first();                   
@@ -36,30 +35,28 @@ class UserController extends Controller
         return view("user.edit",compact("user"));
     }
     
-    public function update(UserRequest $request)
+    public function update(UserRequest $request,User $user ) // model Binding
     {
 
-    $user=User::find(Auth::id());
-    if(!empty($request->password))
-    {
-      $user->password=Hash::make($request->pssword);
-    }
     if(collect($request->img)->isNotEmpty()){
         $this->deleteImage("uploads/auth/$user->img",$user->img);
         $imageUploadName=$this->imageUpload($request,$request->img,"uploads/auth/");
-        $user->img=$imageUploadName;
     }
-    $user->name=$request->name;
-    $user->username=$request->username;
-    $user->email=$request->email;
-    $user->save();
-    return redirect('userProfile/index')->with('success',"data updated successfully");
+    $img=empty($request->img) ? $user->img : $imageUploadName;
+    $password=empty($request->password) ? $user->password : bcrypt($request->password);
+    // return $password ;
+    $user->update(['img'=>$img , 'password'=>$password ] + $request->validated() );
+            
+            // if(!empty($request->password))
+            // {
+            //   $user->password=Hash::make($request->pssword);
+            // }
+    return redirect()->route("userProfile.index")->with('success',"data updated successfully");
     }
 
     public function destroy($id)
     {
         $user=User::findOrFail($id);
-        
         foreach ($user->profile as $profile_image )
         {
             $this->deleteImage("uploads/users/$profile_image->profile_pic",$user->img);
