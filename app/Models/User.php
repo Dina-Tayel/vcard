@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Models\UserProfile;
+use App\Models\Profile;
 
 class User extends Authenticatable
 {
@@ -19,19 +19,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'username',
-        'email',
-        'password',
-        'img',
-        'address',
-
+        'name','username','email','password','img','address',
     ];
-    public function profile()
-    {
-        return $this->hasMany(UserProfile::class,'user_id');
-    }
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -50,4 +39,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // public function setPasswordAttribute($value)
+    // {
+    //     $this->attributes['password'] = bcrypt($value);
+    // }
+
+    public function profile()
+    {
+        return $this->hasMany(Profile::class,'user_id');
+    }
 }

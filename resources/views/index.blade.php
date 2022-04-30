@@ -27,7 +27,7 @@
             </label>
         </div>
         <section class="left-section">
-            <img class="profile-pic" src="{{ asset("storage/profiles/$profile->profile_pic") }}" />
+            <img class="profile-pic" src="{{ asset("uploads/profiles/$profile->profile_pic") }}" />
 
             <div class="profile-detail">
                 <span class="profile-maps">
