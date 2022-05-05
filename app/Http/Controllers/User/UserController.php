@@ -32,7 +32,7 @@ class UserController extends Controller
     public function edit()
     {
         $user=User::findOrFail(auth()->user()->id);
-        return view("user.edit",compact("user"));
+        return view("user.edit");
     }
     
     public function update(UserRequest $request,User $user ) // model Binding

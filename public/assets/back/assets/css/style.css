@@ -1,0 +1,9 @@
+.content-wrapper>.content {
+    position: relative;
+ }
+ 
+ .dodo{
+     position: absolute;
+     bottom: 10px;
+     right: 22px;
+ }
