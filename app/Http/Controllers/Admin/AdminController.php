@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Profile;
 use App\Models\User;
 
-
 class AdminController extends Controller
 {
     // if user role >0 
@@ -32,7 +31,7 @@ class AdminController extends Controller
         if($user)
         {
            $profiles= $user->profile;
-            return view('admin.show_user_profiles',compact("profiles"));
+            return view('admin.show_user_profiles',compact("profiles","user"));
         }
         return redirect()->back();
     }

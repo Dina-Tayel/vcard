@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Profile\profileController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
+use Spatie\FlareClient\View;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */;
+
+// Route::get('/',function(){
+//     return View('welcome');
+// });
 
 Route::get('/profile/{user:username}/{profilename?}',[UserController::class,"profile"]); //model Bending
 
@@ -45,7 +50,7 @@ Route::group(['middleware'=>'auth'],function(){
     Route::group(['middleware'=>'Allusers','prefix'=>'admin'],function(){
         Route::get('/showAllusers',[AdminController::class,'showAllUsers'])->name('Allusers');
         Route::get('/showAllprofiles',[AdminController::class,'showAllProfiles'])->name('Allprofiles');
-        Route::get('/showuserprofiles/{id}',[AdminController::class,'showUserProfiles'])->name('userProfiles');
+        Route::get('/showuserprofiles/{id}',[AdminController::class,'showUserProfiles'])->name('user.profiles');
 
     });
    
